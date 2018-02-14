@@ -19,23 +19,23 @@ namespace ORGSharp
 				var second = this.parse(contents.Skip(1).ToList());
 				if (second.Item1 != null) 
 				{
-					return Tuple.Create(
-						ListSection(new List<ListItem>() {first.Item1}).withSection(second.Item1), 
+					return new Tuple<Element, List<string>>(
+						(new ListSection(new List<ListItem>() {(ListItem) first.Item1})).withSection((ListSection) second.Item1), 
 						second.Item2
 					);
 						
 				}
 				else 
 				{
-					return Tuple.Create(
-							(new ListSection(new List<ListItem>())).withItem(first.Item1),
+					return new Tuple<Element, List<string>>(
+							(new ListSection(new List<ListItem>())).withItem((ListItem) first.Item1),
 						first.Item2
 					);
 				}
 			}
 			else 
 			{
-				return Tuple.Create(null, contents);
+				return new Tuple<Element, List<string>>(null, contents);
 			}
 		}
 	}

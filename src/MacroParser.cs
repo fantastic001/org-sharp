@@ -14,8 +14,8 @@ namespace ORGSharp
 		public Tuple<Element, List<string>> parse(List<string> contents) 
 		{
 			return contents.First().Take(2).ToString() == "#+" && contents.First().Skip(2).TakeWhile(c => c != ':').Count() > 0 ? 
-				Tuple.Create(new Macro(contents.First().Skip(2).TakeWhile(c => c != ':').ToString(), contents.First().SkipWhile(c => c != ':').ToString()), contents.Skip(1).ToList()) 
-			: Tuple.Create(null, contents);
+				new Tuple<Element, List<string>>(new Macro(contents.First().Skip(2).TakeWhile(c => c != ':').ToString(), contents.First().SkipWhile(c => c != ':').ToString()), contents.Skip(1).ToList()) 
+			: new Tuple<Element, List<string>>(null, contents);
 		} 
 	}
 }

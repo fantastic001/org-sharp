@@ -11,12 +11,12 @@ namespace ORGSharp
 	{
 		bool hasHeader(List<string> contents) 
 		{
-			return contents.Skip(1).First().ToString()[0] == "-"; 
+			return contents.Skip(1).First().ToString()[0] == '-'; 
 		}
 
 		TableRow parseRow(string line) 
 		{
-			return new TableRow(line.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries).ToList());
+			return new TableRow(line.Split('|').ToList());
 		}
 
 		// Function should return tuple of (element, remaining string)
@@ -28,21 +28,21 @@ namespace ORGSharp
 			{
 				if (this.hasHeader(contents)) 
 				{
-					TableRow header = this.parse(contents.Skip(2).ToList()).Item1; 
-					var rest = this.prase(contents.Skip(2).ToList());
-					return Tuple.Create((new Table(header, new List<TableRow>())).withTable(rest.Item1), rest.Item2);
+					TableRow header = (TableRow) this.parse(contents.Skip(2).ToList()).Item1; 
+					var rest = this.parse(contents.Skip(2).ToList());
+					return new Tuple<Element, List<string>>((new Table(header, new List<TableRow>())).withTable((Table) rest.Item1), rest.Item2);
 				}
 				else 
 				{
-					var rest = this.prase(contents.Skip(1).ToList());
+					var rest = this.parse(contents.Skip(1).ToList());
 					if (rest.Item1 == null) 
 					{
-						return Tuple.Create((new Table(null, new List<TableRow>())).withItem(this.parseRow(line)), contents.Skip(1).ToList());
+						return new Tuple<Element, List<string>>((new Table(null, new List<TableRow>())).withRow(this.parseRow(line)), contents.Skip(1).ToList());
 					}
 					else 
 					{
-						return Tuple.Create(
-							(new Table(null, new List<TableRow>())).withItem(this.parseRow(line)).withTable(rest.Item1),
+						return new Tuple<Element, List<string>>(
+							(new Table(null, new List<TableRow>())).withRow(this.parseRow(line)).withTable((Table) rest.Item1),
 							rest.Item2
 						);
 					}
@@ -50,7 +50,7 @@ namespace ORGSharp
 			}
 			else 
 			{
-				return Tuple.Create(null, contents);
+				return new Tuple<Element, List<string>>(null, contents);
 			}
 		} 
 	}
