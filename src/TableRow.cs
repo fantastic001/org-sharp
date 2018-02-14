@@ -15,7 +15,7 @@ namespace ORGSharp
 
 		public override ElementParser getParser() 
 		{
-			return new TableRowParser(); 
+			return null;
 		}
 		public override string output() 
 		{

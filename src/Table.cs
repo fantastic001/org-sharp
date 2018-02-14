@@ -17,6 +17,9 @@ namespace ORGSharp
 		public Table withRow(TableRow row) {
 			return new Table(header, rows.Concat(new List<TableRow>() {row}).ToList());
 		}
+		public Table withTable(Table table) {
+			return new Table(header, rows.Concat(table.rows).ToList());
+		}
 		
 
 		public override ElementParser getParser() 

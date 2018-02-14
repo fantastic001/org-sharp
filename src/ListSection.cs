@@ -17,6 +17,11 @@ namespace ORGSharp {
 		{
 			return new ListSection(items.Concat(new List<ListItem>() {it}).ToList());
 		}
+
+		public ListSection withSection(ListSection section) 
+		{
+			return new ListSection(items.Concat(section.items).ToList());
+		}
 		
 		public override ElementParser getParser() 
 		{

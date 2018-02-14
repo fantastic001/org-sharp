@@ -12,7 +12,10 @@ namespace ORGSharp
 		// Function should return tuple of (element, remaining string)
 		public Tuple<Element, List<string>> parse(List<string> contents) 
 		{
-			return null; 
+			int level = contents.TakeWhile(c => c == '*').Count();
+			return level > 0 ? 
+				Tuple.Create(new Section(level, contents.First().SkipWhile(c => c == '*').Skip(1)), contents.Skip(1).ToList()) 
+			: Tuple.Create(null, contents);
 		}
 	}
 }
